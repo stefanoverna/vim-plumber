@@ -1,0 +1,70 @@
+# Vim Plumber - Run ruby tests asynchronously with named pipes
+
+Plumber is designed to speed up your TDD cycle by using a single key
+mapping to run the most relevant test based on the current file in vim.
+
+It uses unix named pipes to send the commands to a secondary session. This 
+implies the presence of a named pipe called ".plumber" and a script that 
+continuously reads the content of pipe, executing the commands it receives:
+
+```bash
+#!/bin/bash
+
+DEFAULT_PIPE_NAME=".plumber"
+PIPE_NAME="${1:-$DEFAULT_PIPE_NAME}"
+
+if [ ! -p $PIPE_NAME ]; then
+  echo "Created pipe ${PIPE_NAME}..."
+  mkfifo $PIPE_NAME
+fi
+
+echo "Waiting for commands!"
+
+while true; do
+  COMMAND=$(cat $PIPE_NAME)
+  echo Running ${COMMAND}...
+  sh -c "$COMMAND"
+done
+```
+
+The default mapping for invoking the plugin is <leader>t. In a spec
+file, this will run "rspec <filename>". In a test-unit file, this will
+run "ruby -Itest <filename>". In a cucumber feature file, this will run
+"cucumber <filename>".
+
+## Repeating
+
+If you invoke the plugin (by default, with <leader>t), and neither the
+current file nor the alternate is a test, spec or feature, plumber will
+simply send the most recent command instead. This can be quite helpful
+in situations where you are editing a related file, or in the case of
+cucumber, step definitions or a view.
+
+The |plumber| and |plumber-focused| invocations each store their own
+command, so you can use the focused one elsewhere in a test suite while
+still setting the normal one, or vice-versa.
+
+## Focused
+
+Plumber also comes with bindings to run focused tests. This is
+accomplished by appending the current line number to the test command.
+In cucumber, this runs the scenario under the cursor. In rspec, this
+runs only the example or group under the cursor.
+
+The default mapping for focused test output is <leader>T.
+
+## Send anything you want!
+
+You can use the "Plumber" function to send arbitrary commands to
+the pipe, i.e.:
+
+```vim
+:nmap ,x :call Plumber("echo %")<CR>
+```
+
+## Mappings
+
+The following are available:
+
+* `<leader>t`: Normal invocation
+* `<leader>T`: Focused test (appends line number)
