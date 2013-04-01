@@ -11,8 +11,9 @@ Plumber is designed to speed up your TDD cycle by using a single key
 mapping to run the most relevant test based on the current file in vim.
 
 It uses unix named pipes to send the commands to a secondary session. This 
-implies the presence of a named pipe called ".plumber" and a script that 
-continuously reads the content of pipe, executing the commands it receives:
+implies the presence of a named pipe called ".plumber" in the current
+directory and a script that continuously reads the content of pipe, executing 
+the commands it receives:
 
 >
   #!/bin/bash

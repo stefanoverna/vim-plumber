@@ -4,8 +4,9 @@ Plumber is designed to speed up your TDD cycle by using a single key
 mapping to run the most relevant test based on the current file in vim.
 
 It uses unix named pipes to send the commands to a secondary session. This 
-implies the presence of a named pipe called ".plumber" and a script that 
-continuously reads the content of pipe, executing the commands it receives:
+implies the presence of a named pipe called ".plumber" in the current directory 
+and a script that continuously reads the content of pipe, executing the 
+commands it receives:
 
 ```bash
 #!/bin/bash
@@ -27,14 +28,14 @@ while true; do
 done
 ```
 
-The default mapping for invoking the plugin is <leader>t. In a spec
-file, this will run "rspec <filename>". In a test-unit file, this will
-run "ruby -Itest <filename>". In a cucumber feature file, this will run
-"cucumber <filename>".
+The default mapping for invoking the plugin is `<leader>t`. In a spec
+file, this will run `rspec <filename>`. In a test-unit file, this will
+run `ruby -Itest <filename>`. In a cucumber feature file, this will run
+`cucumber <filename>`.
 
 ## Repeating
 
-If you invoke the plugin (by default, with <leader>t), and neither the
+If you invoke the plugin (by default, with `<leader>t`), and neither the
 current file nor the alternate is a test, spec or feature, plumber will
 simply send the most recent command instead. This can be quite helpful
 in situations where you are editing a related file, or in the case of
@@ -51,7 +52,7 @@ accomplished by appending the current line number to the test command.
 In cucumber, this runs the scenario under the cursor. In rspec, this
 runs only the example or group under the cursor.
 
-The default mapping for focused test output is <leader>T.
+The default mapping for focused test output is `<leader>T`.
 
 ## Send anything you want!
 
