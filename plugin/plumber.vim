@@ -1,6 +1,10 @@
 " Plumber.vim - TDD via named pipes
 " Author:      Stefano Verna <http://stefanoverna.com/>
-" Version:     1.0
+" Version:     1.0.1
+
+if !exists('g:plumber_use_dispatch')
+  let g:plumber_use_dispatch = 0
+endif
 
 function! s:AlternateForFile(file)
   let substitutions =
@@ -37,12 +41,20 @@ function! s:CommandForTestFile(file)
   return ''
 endfunction
 
+function! s:ExecutePlumbing(command)
+  if g:plumber_use_dispatch
+    exec "Dispatch " . a:command
+  else
+    let completeCommand = "silent !echo " . a:command . " > .plumber"
+    exec completeCommand
+    echom "Sent \"" . a:command . "\" to pipe!"
+    redraw!
+  endif
+endfunction
+
 function! Plumber(command)
   if len(a:command) ># 0
-    let completeCommand = "silent !echo " . a:command . " > .plumber"
-    echom "Executing \"" . completeCommand . "\""
-    exec completeCommand
-    redraw!
+    call s:ExecutePlumbing(a:command)
   else
     echom "No command valid for the specified file!"
   end
