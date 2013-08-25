@@ -45,9 +45,13 @@ function! s:ExecutePlumbing(command)
   if g:plumber_use_dispatch
     exec "Dispatch " . a:command
   else
-    let completeCommand = "silent !echo " . a:command . " > .plumber"
-    exec completeCommand
-    echom "Sent \"" . a:command . "\" to pipe!"
+    let completeCommand = ""
+    if exists("g:plumber_precommand")
+      let completeCommand = completeCommand . g:plumber_precommand . " && "
+    endif
+    let completeCommand = completeCommand . "echo " . a:command . " > .plumber"
+    exec "silent !" . completeCommand
+    echom completeCommand
     redraw!
   endif
 endfunction
