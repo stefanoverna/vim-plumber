@@ -49,7 +49,11 @@ function! s:ExecutePlumbing(command)
     if exists("g:plumber_precommand")
       let completeCommand = completeCommand . g:plumber_precommand . " && "
     endif
-    let completeCommand = completeCommand . "echo " . a:command . " > .plumber"
+    let command = a:command
+    if exists("g:plumber_command_prefix")
+      let command = g:plumber_command_prefix . " " . command
+    endif
+    let completeCommand = completeCommand . "echo " . command . " > .plumber"
     exec "silent !" . completeCommand
     echom completeCommand
     redraw!
