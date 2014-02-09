@@ -1,6 +1,6 @@
 *plumber.txt*  Run ruby tests using named pipes
 
-Author:  Stefano Verna <http://welaika.com/>
+Author:  Stefano Verna <http://stefanoverna.com/>
 License: Same terms as Vim itself (see |license|)
 
 This plugin is only available if 'compatible' is not set.
