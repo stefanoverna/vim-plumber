@@ -1,6 +1,6 @@
 " Plumber.vim - TDD via named pipes
 " Author:      Stefano Verna <http://stefanoverna.com/>
-" Version:     1.0.1
+" Version:     1.0.2
 
 if !exists('g:plumber_use_dispatch')
   let g:plumber_use_dispatch = 0
@@ -12,6 +12,9 @@ function! s:AlternateForFile(file)
     \   [ '\vapp/(.*)\.rb', 'spec/\1_spec.rb' ],
     \   [ '\vlib/(.*)\.rb', 'spec/\1_spec.rb' ],
     \   [ '\v(.*)\.rb', 'spec/\1_spec.rb' ]
+    \   [ '\vapp/(.*)\.rb', 'test/\1_test.rb' ],
+    \   [ '\vlib/(.*)\.rb', 'test/\1_test.rb' ],
+    \   [ '\v(.*)\.rb', 'test/\1_test.rb' ]
     \ ]
 
   for substitution in substitutions
