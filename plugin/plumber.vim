@@ -11,7 +11,7 @@ function! s:AlternateForFile(file)
     \ [
     \   [ '\vapp/(.*)\.rb', 'spec/\1_spec.rb' ],
     \   [ '\vlib/(.*)\.rb', 'spec/\1_spec.rb' ],
-    \   [ '\v(.*)\.rb', 'spec/\1_spec.rb' ]
+    \   [ '\v(.*)\.rb', 'spec/\1_spec.rb' ],
     \   [ '\vapp/(.*)\.rb', 'test/\1_test.rb' ],
     \   [ '\vlib/(.*)\.rb', 'test/\1_test.rb' ],
     \   [ '\v(.*)\.rb', 'test/\1_test.rb' ]
