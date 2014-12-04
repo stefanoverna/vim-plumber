@@ -9,6 +9,7 @@ endif
 function! s:AlternateForFile(file)
   let substitutions =
     \ [
+    \   [ '\vapp/scripts/(.*)\.js', 'test/\1_test.js' ],
     \   [ '\vapp/(.*)\.rb', 'spec/\1_spec.rb' ],
     \   [ '\vlib/(.*)\.rb', 'spec/\1_spec.rb' ],
     \   [ '\v(.*)\.rb', 'spec/\1_spec.rb' ],
@@ -37,6 +38,8 @@ function! s:CommandForTestFile(file)
     return "ruby -Itest " . a:file
   elseif a:file =~# '.feature$'
     return "cucumber " . a:file
+  elseif a:file =~# '_test.js$'
+    return "mocha " . a:file
   elseif len(a:file) ># 0
     let alternateFile = s:AlternateForFile(a:file)
     return s:CommandForTestFile(alternateFile)
